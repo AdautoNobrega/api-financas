@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    username: vabxesjsudppeo
+    password: 27f129d5157c78c1ec7109a91934061af6655d02e8ac715af3207798ac775862
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-3-217-91-165.compute-1.amazonaws.com:5432/d612e9llv08ant
+    jpa:
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+      hibernate:
+        ddl-auto: none
+      database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+
+endpoints:
+  health:
+    sensitive: false
+    enabled: true
+
+management:
+  endpoints:
+    enabled: false
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-components: ALWAYS
+      show-details: NEVER
