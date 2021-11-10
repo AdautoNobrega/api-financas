@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -14,7 +16,7 @@ public class Response<T> {
     private String codigo;
 
     public Response(T corpo) {
-        this("Sucesso", "codigo");
+        this(Objects.isNull(corpo) ? "Sem resultado" : "Sucesso", "req_sucesso");
         this.corpo = corpo;
     }
 

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @ApiV1("/v1/subcategorias")
-@Api(value = "subcategorias", tags = {"subcategoria"})
+@Api(value = "CRUD das subcategorias", tags = {"subcategoria"})
 @AllArgsConstructor
 public class SubcategoriaController {
 

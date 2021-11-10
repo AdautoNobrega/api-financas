@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 
 @ApiV1("/v1/balanco")
-@Api(value = "balanco", tags = {"balanco"})
+@Api(value = "Balanço dos lançamentos", tags = {"balanco"})
 @AllArgsConstructor
 public class BalancoController {
 

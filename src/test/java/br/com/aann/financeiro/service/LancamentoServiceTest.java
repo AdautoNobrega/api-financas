@@ -3,6 +3,7 @@ package br.com.aann.financeiro.service;
 import br.com.aann.financeiro.dto.LancamentoDTO;
 import br.com.aann.financeiro.filter.BalancoFilter;
 import br.com.aann.financeiro.mapper.LancamentoMapper;
+import br.com.aann.financeiro.mock.utils.MockUtils;
 import br.com.aann.financeiro.model.LancamentoEntity;
 import br.com.aann.financeiro.repository.LancamentoRepository;
 import br.com.aann.financeiro.service.impl.LancamentoServiceImpl;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import static br.com.aann.financeiro.mock.utils.MockUtils.getLancamentoDTOMock;
 import static br.com.aann.financeiro.mock.utils.MockUtils.getSubcategoriaDTOMock;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -51,11 +52,11 @@ class LancamentoServiceTest {
     private void mock() {
         when(subcategoriaService.recuperarSubcategoriaPorId(1L)).thenReturn(getSubcategoriaDTOMock());
 
-        final LancamentoDTO lancamentoDTOMockFirst = getLancamentoDTOMock(1L, 1L);
-        final LancamentoDTO lancamentoDTOMockSecond = getLancamentoDTOMock(2L, 1L);
+        final LancamentoDTO lancamentoDTOMockFirst = getLancamentoDTOMock(1L, 1L, true);
+        final LancamentoDTO lancamentoDTOMockSecond = getLancamentoDTOMock(2L, 1L, false);
         final List<LancamentoDTO> lancamentoDTOList = Arrays.asList(lancamentoDTOMockFirst, lancamentoDTOMockSecond);
         final List<LancamentoEntity> lancamentoEntityList = lancamentoDTOList.stream()
-                .map(this::getLancamentoEntityMock).collect(Collectors.toList());
+                .map(MockUtils::getLancamentoEntityMock).collect(Collectors.toList());
         final LancamentoEntity lancamento = lancamentoEntityList.get(0);
         when(lancamentoRepository.save(any(LancamentoEntity.class))).thenReturn(lancamento);
         when(lancamentoRepository.findAll()).thenReturn(lancamentoEntityList);
@@ -69,7 +70,7 @@ class LancamentoServiceTest {
 
     @Test
     void deveCadastrarLancamento() {
-        final LancamentoDTO lancamentoDTO = lancamentoService.criarLancamento(getLancamentoDTOMock(1L, 1L));
+        final LancamentoDTO lancamentoDTO = lancamentoService.criarLancamento(getLancamentoDTOMock(1L, 1L, false));
         Assertions.assertNotNull(lancamentoDTO);
     }
 
@@ -97,7 +98,7 @@ class LancamentoServiceTest {
 
     @Test
     void deveEditarLancamento() {
-        final LancamentoDTO lancamentoDTOMock = getLancamentoDTOMock(1L, 1L);
+        final LancamentoDTO lancamentoDTOMock = getLancamentoDTOMock(1L, 1L, false);
         final BigDecimal valorNovo = BigDecimal.valueOf(new Random().nextDouble());
         lancamentoDTOMock.setValor(valorNovo);
         final LancamentoDTO lancamentoDTO = lancamentoService.editarLancamento(lancamentoDTOMock);
@@ -112,24 +113,6 @@ class LancamentoServiceTest {
     @Test
     void deveRetornarFalsoCasoNaoAcheOLancamento() {
         Assertions.assertFalse(lancamentoService.excluirLancamento(null));
-    }
-
-    private LancamentoDTO getLancamentoDTOMock(long id, long idSubcategoria) {
-        final Random random = new Random();
-        return LancamentoDTO.builder().withId(id).withValor(BigDecimal.valueOf(random.nextDouble()))
-                .withComentario("Teste_" + random.nextInt())
-                .withIdSubcategoria(idSubcategoria).withData(LocalDate.of(2021, recuperarNumeroAleatorioAte(random, 12),
-                        recuperarNumeroAleatorioAte(random, 30))).build();
-    }
-
-    private int recuperarNumeroAleatorioAte(Random random, int i) {
-        return random.nextInt(i - 1) + 1;
-    }
-
-    private LancamentoEntity getLancamentoEntityMock(LancamentoDTO lancamentoDTOMock) {
-        final LancamentoEntity lancamentoEntity = new LancamentoEntity();
-        BeanUtils.copyProperties(lancamentoDTOMock, lancamentoEntity);
-        return lancamentoEntity;
     }
 
 }

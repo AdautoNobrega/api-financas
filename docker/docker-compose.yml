@@ -5,7 +5,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
       args:
-        versao: 1.0
         aplicacao: api-financeiro
     ports:
       - "8581:8080"
@@ -14,5 +13,6 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       XMS: 256m
       XMX: 256m
+      versao: 1.0
     volumes:
       - "../logs:/logs"

@@ -1,29 +1,50 @@
-# README #
+# Api Finanças
 
-This README would normally document whatever steps are necessary to get your application up and running.
+<!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
-### What is this repository for? ###
+> Api que controla os gastos e ganhos
+recebidos pelo usuário, dividido por categorias e subcategorias
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Ajustes e melhorias
 
-### How do I get set up? ###
+O projeto é uma poc e será utilizado para testar conhecimentos em novas tecnologias. Próximas atualizações serão voltadas nas seguintes tarefas:
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+- [] Criar uma tabela usuário e vincular os gastos para cada um.
+- [] Exportar balanço para planilhas e montar um consolidado.
+- [] Criar um front para facilitar as operações.
 
-### Contribution guidelines ###
+## 💻 Pré-requisitos
 
-* Writing tests
-* Code review
-* Other guidelines
+* JDK 11
+* Gradle 6.7+
 
-### Who do I talk to? ###
+OU:
+* Docker Compose
 
-* Repo owner or admin
-* Other community or team contact
+## 🚀 Instalando api-financeiro
+
+Para instalar o api-financeiro, siga estas etapas:
+
+Para rodar na máquina
+```
+$ gradle build
+$ ./gradlew bootRun
+```
+
+No docker
+```
+$ gradle build
+$ cd docker/
+$ docker-compose up -d
+```
+
+## ☕ Usando api-financeiro
+
+Para usar api-financeiro, siga estas etapas:
+
+Poderá acessar a aplicação clicando [aqui](https://financeiro-api-aann.herokuapp.com/api/swagger-ui/index.html)
+
+Ou caso tenha rodado localmente [aqui](
+http://localhost:8080/api/swagger-ui/index.html)
+
+[⬆ Voltar ao topo](#nome-do-projeto)<br>

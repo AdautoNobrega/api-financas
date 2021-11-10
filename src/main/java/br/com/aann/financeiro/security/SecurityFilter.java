@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 3)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final MessageProperties messageProperties;
@@ -51,9 +52,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         try {
             if (httpReq.getRequestURL().toString().contains("/v1/") &&
                     !token.equals(httpReq.getHeader(key))) {
-                resolver.resolveException(httpReq, httpRes, null,
-                        new AccessDeniedException(messageProperties.getMessage("usuario.termonaoaceito")));
-                return;
+                resolver.resolveException(httpReq, httpRes, null, new AccessDeniedException("Acesso Negado!"));
+//                return;
             }
         } catch (Exception ex) {
             log.error("Erro ao comparar autenticação do header", ex);
