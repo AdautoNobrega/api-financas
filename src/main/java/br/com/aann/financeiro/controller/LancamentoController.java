@@ -24,31 +24,31 @@ public class LancamentoController {
     private final LancamentoService lancamentoService;
 
     @GetMapping
-    @ApiOperation(value = "Buscar todos os lançamentos")
+    @ApiOperation("Método para recuperar todos os lançamentos")
     public Response<List<LancamentoDTO>> consultarLancamentos() {
         return new Response<>(lancamentoService.recuperarLancamentos());
     }
 
     @GetMapping("/{id_lancamento}")
-    @ApiOperation(value = "Buscar lançamentos por id")
+    @ApiOperation("Método para recuperar lançamentos por id")
     public Response<LancamentoDTO> consultarLancamentos(@PathVariable("id_lancamento") final Long idLancamento) {
         return new Response<>(lancamentoService.recuperarLancamentoPorId(idLancamento));
     }
 
     @PostMapping
-    @ApiOperation(value = "Criar lançamento de uma subcategoria")
+    @ApiOperation("Método para criar um lançamento de uma subcategoria")
     public Response<LancamentoDTO> criarLancamento(@RequestBody final LancamentoDTO lancamentoDTO) {
         return new Response<>(lancamentoService.criarLancamento(lancamentoDTO));
     }
 
     @PutMapping
-    @ApiOperation(value = "Editar um lançamento")
+    @ApiOperation("Método para editar um lançamento")
     public Response<LancamentoDTO> editarLancamento(@RequestBody final LancamentoDTO lancamentoDTO) {
         return new Response<>(lancamentoService.editarLancamento(lancamentoDTO));
     }
 
     @DeleteMapping("{id_lancamento}")
-    @ApiOperation(value = "Excluir lançamentos por id")
+    @ApiOperation("Método para excluir lançamentos por id")
     public Response<Boolean> excluirLancamento(@PathVariable("id_lancamento") final Long idLancamento) {
         return new Response<>(lancamentoService.excluirLancamento(idLancamento));
     }

@@ -26,29 +26,32 @@ public class SubcategoriaController {
     private final SubcategoriaService subcategoriaService;
 
     @GetMapping
-    @ApiOperation("Método para recuperar as categorias")
+    @ApiOperation("Método para recuperar as subcategorias")
     public Response<List<SubcategoriaDTO>> consultarCategorias(
             @ApiParam(name = "nome") @RequestParam(value = "nome", required = false) final String nome) {
         return new Response<>(subcategoriaService.recuperarSubcategorias(nome));
     }
 
     @GetMapping("/{id_subcategoria}")
-    @ApiOperation("Método para recuperar as categorias")
+    @ApiOperation("Método para recuperar uma subcategoria dado um id")
     public Response<SubcategoriaDTO> consultarCategorias(@PathVariable("id_subcategoria") final Long idSubcategoria) {
         return new Response<>(subcategoriaService.recuperarSubcategoriaPorId(idSubcategoria));
     }
 
     @PostMapping
+    @ApiOperation("Método para criar uma subcategoria")
     public Response<SubcategoriaDTO> criarSubcategoria(@RequestBody final SubcategoriaDTO subcategoriaDTO) {
         return new Response<>(subcategoriaService.criarSubcategoria(subcategoriaDTO));
     }
 
     @PutMapping
+    @ApiOperation("Método para editar uma subcategoria")
     public Response<SubcategoriaDTO> editarCategoria(@RequestBody final SubcategoriaDTO subcategoriaDTO) {
         return new Response<>(subcategoriaService.editarSubcategoria(subcategoriaDTO));
     }
 
     @DeleteMapping("/{id_subcategoria}")
+    @ApiOperation("Método para excluir uma subcategoria")
     public Response<Boolean> excluirCategoria(@PathVariable("id_subcategoria") final Long idCategoria) {
         return new Response<>(subcategoriaService.excluirSubcategoria(idCategoria));
     }

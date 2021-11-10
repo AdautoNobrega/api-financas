@@ -33,22 +33,25 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id_categoria}")
-    @ApiOperation("Método para recuperar as categorias")
+    @ApiOperation("Método para recuperar uma categoria dado um id")
     public Response<CategoriaDTO> consultarCategorias(@PathVariable("id_categoria") final Long idCategoria) {
         return new Response<>(categoriaService.recuperarCategoriaPorId(idCategoria));
     }
 
     @PostMapping
+    @ApiOperation("Método para criar uma categoria")
     public Response<CategoriaDTO> criarCategoria(@RequestBody final CategoriaDTO categoriaDTO) {
         return new Response<>(categoriaService.criarCategoria(categoriaDTO));
     }
 
     @PutMapping
+    @ApiOperation("Método para editar uma categoria")
     public Response<CategoriaDTO> editarCategoria(@RequestBody final CategoriaDTO categoriaDTO) {
         return new Response<>(categoriaService.editarCategoria(categoriaDTO));
     }
 
     @DeleteMapping("/{id_categoria}")
+    @ApiOperation("Método para excluir uma categoria por id")
     public Response<Boolean> excluirCategoria(@PathVariable("id_categoria") final Long idCategoria) {
         return new Response<>(categoriaService.excluirCategoria(idCategoria));
     }

@@ -1,14 +1,12 @@
 package br.com.aann.financeiro.filter;
 
 import br.com.aann.financeiro.constants.FormatosDatas;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serializable;
 import java.time.LocalDate;
