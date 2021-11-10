@@ -44,7 +44,7 @@ public class SwaggerConfig {
         RequestParameterBuilder tokenBuilder = new RequestParameterBuilder();
         tokenBuilder
                 .name(key)
-                .description("Token de acesso Ex.:" + token)
+                .description("Token de acesso Ex.: " + token)
                 .required(true)
                 .in(ParameterType.HEADER)
                 .accepts(Collections.singleton(MediaType.APPLICATION_JSON))

@@ -1,6 +1,8 @@
 package br.com.aann.financeiro.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +27,8 @@ import java.util.Objects;
 @Table(name = "lancamento")
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class LancamentoEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -4031898198186313308L;

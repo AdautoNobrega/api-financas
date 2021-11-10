@@ -1,5 +1,6 @@
 package br.com.aann.financeiro.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @NamedEntityGraph(name = "subcategorias-lancamentos", attributeNodes = {@NamedAttributeNode(value = "subcategorias", subgraph = "lancamentos")})
 public class CategoriaEntity implements Serializable {
 
@@ -42,6 +44,11 @@ public class CategoriaEntity implements Serializable {
 
     public CategoriaEntity(Long id) {
         this.id = id;
+    }
+
+    public CategoriaEntity(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
 
     @Override

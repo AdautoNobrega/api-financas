@@ -26,8 +26,8 @@ import static br.com.aann.financeiro.util.StringUtil.naoEstaVazio;
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
 
-    private final CategoriaRepository categoriaRepository;
     private final CategoriaMapper categoriaMapper;
+    private final CategoriaRepository categoriaRepository;
 
     @Override
     public List<CategoriaDTO> recuperarCategorias(String nome) {
@@ -50,7 +50,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         if (Objects.nonNull(categoriaDTO.getId()))
             return this.editarCategoria(categoriaDTO);
         final CategoriaEntity categoria = categoriaMapper.map(categoriaDTO);
-        final CategoriaEntity novaCategoria = categoriaRepository.saveAndFlush(categoria);
+        final CategoriaEntity novaCategoria = categoriaRepository.save(categoria);
         categoriaDTO.setId(novaCategoria.getId());
         return categoriaDTO;
     }
@@ -72,12 +72,12 @@ public class CategoriaServiceImpl implements CategoriaService {
     public CategoriaDTO editarCategoria(CategoriaDTO categoriaDTO) {
         Objects.requireNonNull(categoriaDTO.getId());
         this.validarNome(categoriaDTO);
-        Optional<CategoriaEntity> optionalCategoria = categoriaRepository.findById(categoriaDTO.getId());
+        final Optional<CategoriaEntity> optionalCategoria = categoriaRepository.findById(categoriaDTO.getId());
         if (!optionalCategoria.isPresent())
             throw new IllegalArgumentException("Id inválido");
         final CategoriaEntity categoria = optionalCategoria.get();
-        categoria.setNome(categoriaDTO.getNome().toUpperCase());
-        categoriaRepository.saveAndFlush(categoria);
+        categoria.setNome(categoriaDTO.getNome());
+        categoriaRepository.save(categoria);
         return categoriaDTO;
     }
 
@@ -85,7 +85,8 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Boolean excluirCategoria(Long id) {
         final CategoriaEntity categoria = categoriaRepository.getById(id);
         final Set<SubcategoriaEntity> subcategorias = categoria.getSubcategorias();
-        if (subcategorias.stream().allMatch(s -> CollectionUtils.isEmpty(s.getLancamentos()))) {
+        if (CollectionUtils.isEmpty(subcategorias) || subcategorias.stream()
+                .allMatch(s -> CollectionUtils.isEmpty(s.getLancamentos()))) {
             categoriaRepository.delete(categoria);
             return true;
         }

@@ -44,7 +44,7 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
         validarNomeUnico(idCategoria, subcategoriaDTO.getNome());
         final CategoriaDTO categoriaDTO = categoriaService.recuperarCategoriaPorId(idCategoria);
         if (Objects.nonNull(categoriaDTO)) {
-            final SubcategoriaEntity subcategoriaEntity = subcategoriaRepository.saveAndFlush(
+            final SubcategoriaEntity subcategoriaEntity = subcategoriaRepository.save(
                     new SubcategoriaEntity(subcategoriaDTO.getNome(), new CategoriaEntity(idCategoria)));
             subcategoriaDTO.setId(subcategoriaEntity.getId());
         }

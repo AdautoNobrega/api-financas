@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(setterPrefix = "with")
 public class LancamentoDTO implements Serializable {
 
     @JsonIgnore
@@ -26,6 +28,7 @@ public class LancamentoDTO implements Serializable {
     private BigDecimal valor;
 
     @JsonFormat(pattern = FormatosDatas.FORMATO_DATA_BR)
+    @Builder.Default
     private LocalDate data = LocalDate.now();
 
     @JsonProperty("id_subcategoria")

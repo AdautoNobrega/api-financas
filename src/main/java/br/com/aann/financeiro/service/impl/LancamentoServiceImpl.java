@@ -6,8 +6,10 @@ import br.com.aann.financeiro.mapper.LancamentoMapper;
 import br.com.aann.financeiro.model.LancamentoEntity;
 import br.com.aann.financeiro.model.SubcategoriaEntity;
 import br.com.aann.financeiro.repository.LancamentoRepository;
+import br.com.aann.financeiro.repository.specs.BaseSpecification;
 import br.com.aann.financeiro.repository.specs.LancamentoSpecification;
 import br.com.aann.financeiro.service.LancamentoService;
+import br.com.aann.financeiro.service.SubcategoriaService;
 import br.com.aann.financeiro.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +21,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static br.com.aann.financeiro.repository.specs.BaseSpecification.addClausula;
+
 @Slf4j
 @Service
 @AllArgsConstructor
 public class LancamentoServiceImpl implements LancamentoService {
 
+    private final SubcategoriaService subcategoriaService;
     private final LancamentoRepository lancamentoRepository;
     private final LancamentoMapper lancamentoMapper;
 
@@ -41,8 +46,7 @@ public class LancamentoServiceImpl implements LancamentoService {
                     Objects.isNull(dataFim) ? LocalDate.now() : dataFim);
         }
         if (Objects.nonNull(filtro.getIdCategoria()))
-            whereData = LancamentoSpecification.addClausula(whereData,
-                    LancamentoSpecification.whereIdCategoria(filtro.getIdCategoria()));
+            whereData = addClausula(whereData, LancamentoSpecification.whereIdCategoria(filtro.getIdCategoria()));
         return lancamentoMapper.mapToList(lancamentoRepository.findAll(whereData));
     }
 
@@ -58,7 +62,7 @@ public class LancamentoServiceImpl implements LancamentoService {
     @Override
     public LancamentoDTO criarLancamento(LancamentoDTO lancamentoDTO) {
         this.validarLancamento(lancamentoDTO);
-        final LancamentoEntity lancamentoEntity = lancamentoRepository.saveAndFlush(
+        final LancamentoEntity lancamentoEntity = lancamentoRepository.save(
                 lancamentoMapper.map(lancamentoDTO));
         lancamentoDTO.setId(lancamentoEntity.getId());
         return lancamentoDTO;
@@ -74,7 +78,7 @@ public class LancamentoServiceImpl implements LancamentoService {
             lancamento.setSubcategoria(new SubcategoriaEntity(lancamentoDTO.getIdSubcategoria()));
         if (StringUtil.naoEstaVazio(lancamentoDTO.getComentario()))
             lancamento.setComentario(lancamentoDTO.getComentario());
-        return lancamentoMapper.map(lancamentoRepository.saveAndFlush(lancamento));
+        return lancamentoMapper.map(lancamentoRepository.save(lancamento));
     }
 
     @Override
@@ -92,5 +96,6 @@ public class LancamentoServiceImpl implements LancamentoService {
     private void validarLancamento(LancamentoDTO lancamentoDTO) {
         Objects.requireNonNull(lancamentoDTO.getValor(), "O valor não pode ser nulo");
         Objects.requireNonNull(lancamentoDTO.getIdSubcategoria(), "A subcategoria precisa ser informada");
+        Objects.requireNonNull(subcategoriaService.recuperarSubcategoriaPorId(lancamentoDTO.getIdSubcategoria()));
     }
 }
