@@ -15,7 +15,7 @@ configurations {
 	}
 }
 bootRun {
-	jvmArgs = ["-Xms256m", "-Xmx256m", "-Duser.timezone=Brazil/East"]
+	jvmArgs = ["-Duser.timezone=Brazil/East"]
 }
 repositories {
 	mavenCentral()
