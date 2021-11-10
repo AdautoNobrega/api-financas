@@ -50,7 +50,7 @@ jacocoTestReport {
 jar {
 	manifest {
 		attributes(
-				'Main-Class': 'br.com.aann.FinanceiroApplication'
+				'Main-Class': 'br.com.aann.financeiro.FinanceiroApplication'
 		)
 	}
 }
