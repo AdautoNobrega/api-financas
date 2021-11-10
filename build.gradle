@@ -47,6 +47,14 @@ jacocoTestReport {
 	}
 }
 
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'br.com.aann.FinanceiroApplication'
+		)
+	}
+}
+
 check.dependsOn jacocoTestCoverageVerification
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.5.6'
